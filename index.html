@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School2k3 Chill Player</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    color: #fff;
+    overflow: hidden;
+    background: #0a0a0a;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Background */
+.bg {
+    position: fixed;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(90px) brightness(0.35) saturate(1.3);
+    transform: scale(1.25);
+    z-index: -2;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.8) 100%);
+    z-index: -1;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 77, 77, 0.2);
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    z-index: 100;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ff4d4d, #ff8a8a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.title-nav {
+    font-size: 18px;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* Container */
+.container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 100vh;
+    padding: 90px 30px 30px;
+    gap: 25px;
+}
+
+/* Player Area */
+.left {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.player-frame {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(255, 77, 77, 0.25),
+                inset 0 0 0 1px rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform 0.4s ease;
+}
+
+.player-frame:hover {
+    transform: translateY(-4px);
+}
+
+/* Info */
+.info-area {
+    padding: 0 8px;
+}
+
+.main-title {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 6px;
+}
+
+.signature {
+    font-size: 13px;
+    color: #ff4d4d;
+    letter-spacing: 1.5px;
+    opacity: 0.85;
+}
+
+/* Playlist */
+.right {
+    flex: 1;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.06);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.playlist-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.playlist-header::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #ff4d4d;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Items */
+.item {
+    display: flex;
+    gap: 14px;
+    padding: 12px 22px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.item:hover {
+    background: rgba(255, 77, 77, 0.12);
+    transform: translateX(8px);
+}
+
+.item.active {
+    background: rgba(255, 77, 77, 0.25);
+    box-shadow: inset 0 0 0 2px rgba(255, 77, 77, 0.4);
+}
+
+.thumb-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.thumb {
+    width: 138px;
+    height: 78px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    transition: all 0.3s;
+}
+
+.item:hover .thumb {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 77, 77, 0.3);
+}
+
+.play-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    border-radius: 12px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.item:hover .play-overlay {
+    display: flex;
+    opacity: 1;
+}
+
+.item.active .play-overlay {
+    display: flex;
+    opacity: 1;
+    background: rgba(255, 77, 77, 0.3);
+}
+
+/* Scrollbar */
+.right {
+    overflow-y: auto;
+}
+
+.right::-webkit-scrollbar {
+    width: 6px;
+}
+
+.right::-webkit-scrollbar-thumb {
+    background: #ff4d4d;
+    border-radius: 10px;
+}
+
+/* Controls */
+.controls {
+    padding: 15px 22px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    background: rgba(255, 77, 77, 0.2);
+    border-color: #ff4d4d;
+    transform: translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<div id="bg" class="bg"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">SCHOOL2K3</div>
+    <div class="title-nav">Chill Player</div>
+    <div style="margin-left:auto">
+        <button class="btn" onclick="nextRandom()">🎲 Random</button>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- LEFT - Player -->
+    <div class="left">
+        <div id="player" class="player-frame"></div>
+        
+        <div class="info-area">
+            <div id="title" class="main-title">Loading...</div>
+            <div class="signature">SCHOOL2K3 • PRIVATE CHILL SPACE</div>
+        </div>
+    </div>
+
+    <!-- RIGHT - Playlist -->
+    <div class="right">
+        <div class="playlist-header">
+            Danh sách phát • Chill Vibes
+        </div>
+        <div id="list"></div>
+        <div class="controls">
+            <button class="btn" onclick="nextRandom()" style="flex:1">Phát ngẫu nhiên tiếp theo</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const videos = [
+    "6hNenqz0ISA", "5aU6EXel1Cs", "jPjQJYKhhk4", "2g2QOisCvhs",
+    "b56j7WvwaYM", "T7ksmtaVeOk", "X5Ra4S4B96U", "umMQf9spwMw"
+];
+
+let player;
+
+function renderList() {
+    let html = "";
+    videos.forEach((id, i) => {
+        html += `
+        <div class="item ${i===0?'active':''}" onclick="playVideo(${i})" id="item-${i}">
+            <div class="thumb-container">
+                <div class="thumb" style="background-image:url('https://img.youtube.com/vi/${id}/hqdefault.jpg')"></div>
+                <div class="play-overlay">▶</div>
+            </div>
+            <div class="info" style="flex:1">
+                <div id="title-${i}" style="font-size:15px; line-height:1.4; margin-bottom:4px;">Loading...</div>
+                <div style="font-size:13px; opacity:0.6;">School2k3 Chill</div>
+            </div>
+        </div>`;
+    });
+    document.getElementById("list").innerHTML = html;
+}
+
+function loadTitles() {
+    videos.forEach((id, i) => {
+        fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`)
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById(`title-${i}`).innerText = data.title;
+                if (i === 0) {
+                    document.getElementById("title").innerText = data.title;
+                    updateBG(id);
+                }
+            });
+    });
+}
+
+function updateBG(id) {
+    document.getElementById("bg").style.backgroundImage = 
+        `ur[](https://img.youtube.com/vi/${id}/maxresdefault.jpg)`;
+}
+
+function playVideo(i) {
+    player.loadVideoById(videos[i]);
+
+    document.querySelectorAll(".item").forEach(e => e.classList.remove("active"));
+    document.getElementById(`item-${i}`).classList.add("active");
+
+    document.getElementById("title").innerText = 
+        document.getElementById(`title-${i}`).innerText;
+
+    updateBG(videos[i]);
+}
+
+function nextRandom() {
+    let i = Math.floor(Math.random() * videos.length);
+    playVideo(i);
+}
+
+// YouTube API
+let tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+document.body.appendChild(tag);
+
+function onYouTubeIframeAPIReady() {
+    renderList();
+    loadTitles();
+
+    player = new YT.Player('player', {
+        videoId: videos[0],
+        playerVars: {
+            autoplay: 1,
+            rel: 0,
+            modestbranding: 1
+        },
+        events: {
+            onStateChange: (e) => {
+                if (e.data === YT.PlayerState.ENDED) {
+                    nextRandom();
+                }
+            }
+        }
+    });
+}
+</script>
+
+</body>
+</html>
