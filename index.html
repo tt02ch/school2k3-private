@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>School2k3 Chill Player | Neon Scroll</title>
+<title>School2k3 Chill Player · Full layout</title>
 
 <style>
 * {
@@ -17,10 +17,10 @@ body {
     color: #fff;
     overflow: hidden;
     background: #0a0a0a;
-    font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-/* Background blur layer */
+/* Background blur */
 .bg {
     position: fixed;
     inset: 0;
@@ -29,7 +29,7 @@ body {
     filter: blur(90px) brightness(0.35) saturate(1.3);
     transform: scale(1.25);
     z-index: -2;
-    transition: background-image 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    transition: background-image 0.6s ease;
 }
 
 .bg::after {
@@ -40,7 +40,7 @@ body {
     z-index: -1;
 }
 
-/* Navbar premium */
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -55,25 +55,21 @@ body {
     padding: 0 24px;
     z-index: 100;
     gap: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
 .logo {
     font-size: 24px;
     font-weight: 800;
-    background: linear-gradient(135deg, #ff4d4d, #ff9494, #ffc371);
+    background: linear-gradient(135deg, #ff4d4d, #ff9494);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.3px;
-    text-shadow: 0 0 8px rgba(255,77,77,0.3);
 }
 
 .title-nav {
     font-size: 16px;
     opacity: 0.8;
     font-weight: 500;
-    letter-spacing: 0.5px;
 }
 
 .btn {
@@ -83,20 +79,17 @@ body {
     border-radius: 40px;
     padding: 8px 18px;
     font-size: 14px;
-    font-weight: 500;
     cursor: pointer;
-    transition: all 0.25s ease;
-    backdrop-filter: blur(4px);
+    transition: all 0.2s;
 }
 
 .btn:hover {
     background: #ff4d4d;
     border-color: #ff4d4d;
     transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
 }
 
-/* main container */
+/* Container */
 .container {
     display: flex;
     max-width: 1600px;
@@ -106,13 +99,13 @@ body {
     gap: 24px;
 }
 
-/* LEFT AREA — video + info, FILLS REMAINING SPACE CLEANLY */
+/* LEFT - video area + FILL THE GAP under video */
 .left {
     flex: 2.2;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    min-width: 0; /* avoid overflow */
+    gap: 16px;
+    min-width: 0;
 }
 
 .player-frame {
@@ -120,46 +113,120 @@ body {
     aspect-ratio: 16 / 9;
     border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 25px 45px -12px rgba(255, 77, 77, 0.35), inset 0 0 0 1px rgba(255,255,255,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
     background: #000;
 }
 
-.player-frame:hover {
-    transform: scale(1.01);
-    box-shadow: 0 28px 50px -15px rgba(255, 77, 77, 0.5);
-}
-
 .info-area {
-    padding: 0 6px 6px 6px;
-    background: linear-gradient(90deg, rgba(255,77,77,0.05), transparent);
-    border-radius: 24px;
+    padding: 0 6px;
 }
 
 .main-title {
-    font-size: clamp(22px, 2.8vw, 30px);
+    font-size: clamp(20px, 2.5vw, 28px);
     font-weight: 700;
     line-height: 1.3;
-    margin-bottom: 8px;
-    letter-spacing: -0.2px;
-    background: linear-gradient(135deg, #fff, #ffc6c6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
 .signature {
-    font-size: 13px;
+    font-size: 12px;
     color: #ff8a8a;
-    letter-spacing: 1.2px;
-    opacity: 0.8;
-    font-weight: 400;
+    letter-spacing: 1px;
+    opacity: 0.7;
 }
 
-/* =====================  RIGHT PLAYLIST - BEAUTIFUL SCROLL + FILL GAP  ===================== */
+/* === PHẦN LẤP ĐẦY KHOẢNG TRỐNG PHÍA DƯỚI VIDEO === */
+/* Khung "Sắp phát" đơn giản, không cầu kỳ, ăn hết khoảng trống còn lại */
+.gap-filler {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.filler-title {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffa0a0;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filler-title span {
+    background: #ff4d4d20;
+    padding: 2px 10px;
+    border-radius: 40px;
+    font-size: 11px;
+}
+
+.upcoming-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 4px;
+}
+
+.upcoming-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.upcoming-list::-webkit-scrollbar-thumb {
+    background: #ff4d4d;
+    border-radius: 10px;
+}
+
+.up-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 14px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.up-item:hover {
+    background: rgba(255,77,77,0.2);
+    transform: translateX(4px);
+}
+
+.up-thumb {
+    width: 48px;
+    height: 32px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.up-name {
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* RIGHT - Playlist */
 .right {
     flex: 1.2;
-    min-width: 310px;
+    min-width: 300px;
     background: rgba(20, 20, 28, 0.55);
     backdrop-filter: blur(24px);
     border-radius: 28px;
@@ -167,33 +234,27 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transition: all 0.2s;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
 }
 
-/* Playlist header */
 .playlist-header {
-    padding: 20px 22px 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 16px;
+    padding: 18px 22px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 15px;
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: rgba(0,0,0,0.2);
-    backdrop-filter: blur(4px);
+    gap: 10px;
 }
 
 .playlist-header::before {
     content: '';
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     background: #ff4d4d;
-    border-radius: 12px;
-    box-shadow: 0 0 6px #ff4d4d;
+    border-radius: 50%;
 }
 
-/* ---------- SCROLLABLE LIST - CUSTOM SCROLLBAR, FILL SPACE BELOW VIDEO VIBE ---------- */
+/* Thanh cuộn đẹp cho list nhạc (yêu cầu số 1) */
 #list {
     flex: 1;
     overflow-y: auto;
@@ -201,133 +262,68 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    scroll-behavior: smooth;
 }
 
-/* ====== SCROLL BAR STYLING - "LAI CAI THANH SCROLL CHO DEP HON" ====== */
 #list::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
 }
 
 #list::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    margin-block: 8px;
+    border-radius: 10px;
 }
 
 #list::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #ff4d4d, #ff7a5c);
-    border-radius: 20px;
-    transition: background 0.2s;
+    background: #ff4d4d;
+    border-radius: 10px;
 }
 
-#list::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #ff6a6a, #ff9f7a);
-    box-shadow: 0 0 4px #ff4d4d;
-}
-
-/* Modern scroll for Firefox */
 #list {
     scrollbar-width: thin;
-    scrollbar-color: #ff4d4d rgba(255,255,255,0.08);
+    scrollbar-color: #ff4d4d rgba(255,255,255,0.1);
 }
 
-/* Playlist Item */
 .item {
     display: flex;
-    gap: 14px;
-    padding: 12px 14px;
-    margin-right: 6px;
+    gap: 12px;
+    padding: 10px 12px;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    border-radius: 18px;
-    background: rgba(10, 10, 14, 0.3);
-    backdrop-filter: blur(2px);
+    transition: all 0.2s;
+    border-radius: 16px;
+    background: rgba(10,10,14,0.3);
     border: 1px solid transparent;
 }
 
 .item:hover {
-    background: rgba(255, 77, 77, 0.18);
-    transform: translateX(5px);
-    border-color: rgba(255, 77, 77, 0.4);
-    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    background: rgba(255, 77, 77, 0.15);
+    transform: translateX(4px);
 }
 
 .item.active {
-    background: linear-gradient(95deg, rgba(255, 77, 77, 0.25), rgba(255, 100, 100, 0.12));
+    background: linear-gradient(95deg, rgba(255,77,77,0.25), rgba(255,100,100,0.1));
     border-left: 3px solid #ff4d4d;
-    border-radius: 18px;
-    box-shadow: 0 0 10px rgba(255,77,77,0.2);
-}
-
-.thumb-container {
-    position: relative;
-    flex-shrink: 0;
-    border-radius: 12px;
-    overflow: hidden;
 }
 
 .thumb {
-    width: 115px;
-    height: 68px;
+    width: 100px;
+    height: 60px;
     border-radius: 12px;
     background-size: cover;
     background-position: center;
-    transition: all 0.25s;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    flex-shrink: 0;
 }
 
-.item:hover .thumb {
-    transform: scale(1.04);
-}
-
-.play-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    backdrop-filter: blur(2px);
-}
-
-.item:hover .play-overlay,
-.item.active .play-overlay {
-    opacity: 1;
-}
-
-/* bottom controls (second random button) - but we fill gap naturally */
 .controls {
     padding: 14px 20px 20px;
     border-top: 1px solid rgba(255,255,255,0.07);
-    background: rgba(0,0,0,0.15);
 }
 
 .controls .btn {
-    background: rgba(255, 77, 77, 0.2);
     width: 100%;
-    padding: 12px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: all 0.2s;
+    padding: 10px;
 }
 
-/* ========== RESPONSIVE: keep spacing and thumbnails nice ========== */
-@media (max-width: 1024px) {
-    .container {
-        padding: 75px 18px 20px;
-        gap: 20px;
-    }
-    .thumb {
-        width: 100px;
-        height: 62px;
-    }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
     body {
         overflow-y: auto;
@@ -335,50 +331,18 @@ body {
     .container {
         flex-direction: column;
         height: auto;
-        min-height: 100vh;
         padding: 75px 16px 20px;
-        gap: 22px;
-    }
-    .left {
-        flex: auto;
     }
     .right {
-        min-width: 100%;
-        max-height: 480px;
-        flex: none;
-        margin-bottom: 15px;
+        width: 100%;
+        max-height: 420px;
     }
-    #list {
-        max-height: 320px;
-    }
-    .thumb {
-        width: 90px;
-        height: 54px;
-    }
-    .navbar {
-        padding: 0 16px;
-    }
-    .logo {
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 70px 12px 16px;
-    }
-    .item {
-        padding: 8px 12px;
+    .gap-filler {
+        min-height: 180px;
     }
     .thumb {
         width: 80px;
         height: 48px;
-    }
-    .main-title {
-        font-size: 17px;
-    }
-    .playlist-header {
-        padding: 14px 18px;
     }
 }
 </style>
@@ -387,30 +351,39 @@ body {
 
 <div id="bg" class="bg"></div>
 
-<!-- Navbar -->
 <nav class="navbar">
-    <div class="logo">✦ SCHOOL2K3</div>
-    <div class="title-nav">Chill Player • deep ambient</div>
+    <div class="logo">SCHOOL2K3</div>
+    <div class="title-nav">Chill Player</div>
     <div style="margin-left:auto">
-        <button class="btn" onclick="nextRandom()" style="padding:7px 16px;">🎲 Random song</button>
+        <button class="btn" onclick="nextRandom()">🎲 Random</button>
     </div>
 </nav>
 
 <div class="container">
-
-    <!-- LEFT - Video + info (video fills top, no empty gap) -->
+    <!-- LEFT: Video + info + KHOẢNG TRỐNG ĐƯỢC LẤP ĐẦY BẰNG "SẮP PHÁT" -->
     <div class="left">
         <div id="player" class="player-frame"></div>
         <div class="info-area">
-            <div id="title" class="main-title">✨ Loading the vibe...</div>
-            <div class="signature">SCHOOL2K3 • PRIVATE CHILL ATMOSPHERE</div>
+            <div id="title" class="main-title">Loading...</div>
+            <div class="signature">SCHOOL2K3 • PRIVATE CHILL SPACE</div>
+        </div>
+        
+        <!-- Khung lấp đầy khoảng trống phía dưới video (đơn giản, đúng style) -->
+        <div class="gap-filler">
+            <div class="filler-title">
+                🎧 Sắp phát tiếp theo <span>up next</span>
+            </div>
+            <div class="upcoming-list" id="upcomingList">
+                <!-- sẽ tự động fill 3-4 bài tiếp theo -->
+                <div style="text-align:center; padding:20px; opacity:0.5;">Đang tải...</div>
+            </div>
         </div>
     </div>
 
-    <!-- RIGHT - Playlist with premium scroll + bottom control fills the rest space elegantly -->
+    <!-- RIGHT: Playlist có thanh cuộn đẹp -->
     <div class="right">
         <div class="playlist-header">
-            🎧 Danh sách phát • Chill Waves
+            📀 Danh sách phát • Chill Vibes
         </div>
         <div id="list"></div>
         <div class="controls">
@@ -420,164 +393,129 @@ body {
 </div>
 
 <script>
-// Extended playlist — more chill tracks
 const videos = [
     "6hNenqz0ISA", "5aU6EXel1Cs", "jPjQJYKhhk4", "2g2QOisCvhs",
     "b56j7WvwaYM", "T7ksmtaVeOk", "X5Ra4S4B96U", "umMQf9spwMw",
-    "IDafZe9nQ-8",
-    "y3o7Dg9Ikpc",     // Vô Tình - HOAPROX x XESI
-    "gOtfJ151ue4",      // Tết Đong Đầy
-    "L3hVJ0jMmj4",      // tua space chill
-    "s9RzFkDqL0A"       // extra lo-fi
+    "IDafZe9nQ-8", "y3o7Dg9Ikpc", "gOtfJ151ue4"
 ];
 
-let player = null;
-let currentPlayingIndex = 0;
+let player;
+let titlesCache = {};
 
-// Render playlist beautifully
+// Render playlist bên phải
 function renderList() {
     let html = "";
-    videos.forEach((id, idx) => {
+    videos.forEach((id, i) => {
         html += `
-        <div class="item ${idx === 0 ? 'active' : ''}" onclick="playVideo(${idx})" id="item-${idx}">
-            <div class="thumb-container">
-                <div class="thumb" style="background-image:url('https://img.youtube.com/vi/${id}/hqdefault.jpg')"></div>
-                <div class="play-overlay">▶</div>
-            </div>
-            <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
-                <div id="title-${idx}" style="font-size:14.5px; font-weight:500; line-height:1.4; margin-bottom:5px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">🎵 Đang tải...</div>
-                <div style="font-size:11px; opacity:0.65; letter-spacing:0.3px;">School2k3 • ༄ lofi</div>
+        <div class="item ${i===0?'active':''}" onclick="playVideo(${i})" id="item-${i}">
+            <div class="thumb" style="background-image:url('https://img.youtube.com/vi/${id}/hqdefault.jpg')"></div>
+            <div style="flex:1">
+                <div id="title-${i}" style="font-size:14px; font-weight:500; margin-bottom:4px;">Loading...</div>
+                <div style="font-size:11px; opacity:0.6;">School2k3</div>
             </div>
         </div>`;
     });
     document.getElementById("list").innerHTML = html;
 }
 
-// Fetch titles with fallback
+// Cập nhật khung "Sắp phát" bên dưới video (lấp đầy khoảng trống)
+function updateUpcomingQueue(currentIndex) {
+    const container = document.getElementById("upcomingList");
+    if (!container) return;
+    let upcomingIndexes = [];
+    for (let i = 1; i <= 4; i++) {
+        let idx = (currentIndex + i) % videos.length;
+        upcomingIndexes.push(idx);
+    }
+    
+    let queueHtml = "";
+    upcomingIndexes.forEach((idx) => {
+        const titleText = titlesCache[idx] ? titlesCache[idx] : `Track ${idx+1}`;
+        const vid = videos[idx];
+        queueHtml += `
+        <div class="up-item" onclick="playVideo(${idx})">
+            <div class="up-thumb" style="background-image:url('https://img.youtube.com/vi/${vid}/default.jpg')"></div>
+            <div class="up-name">${titleText.length > 40 ? titleText.substring(0,38)+'..' : titleText}</div>
+        </div>`;
+    });
+    container.innerHTML = queueHtml;
+}
+
+// Fetch titles và render cả hai khu vực
 async function loadTitles() {
     for (let i = 0; i < videos.length; i++) {
         const id = videos[i];
         try {
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 4000);
-            const res = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`, { signal: controller.signal });
-            clearTimeout(timeout);
+            const res = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
             const data = await res.json();
+            let songTitle = data.title || `Chill track ${i+1}`;
+            if (songTitle.length > 50) songTitle = songTitle.substring(0,47)+"...";
+            titlesCache[i] = songTitle;
             const titleEl = document.getElementById(`title-${i}`);
-            if (titleEl && data.title) {
-                let shortTitle = data.title.length > 55 ? data.title.substring(0, 52) + "..." : data.title;
-                titleEl.innerText = shortTitle;
-            } else if (titleEl) {
-                titleEl.innerText = `🎧 Track #${i+1}`;
-            }
-            if (i === 0 && data.title) {
-                document.getElementById("title").innerText = data.title;
-                updateBG(videos[0]);
+            if (titleEl) titleEl.innerText = songTitle;
+            if (i === 0) {
+                document.getElementById("title").innerText = songTitle;
+                updateBG(id);
             }
         } catch(e) {
-            const titleEl = document.getElementById(`title-${i}`);
-            if (titleEl) titleEl.innerText = `🎵 Chill track ${i+1}`;
-            if (i === 0) document.getElementById("title").innerText = "School2k3 • mellow session";
+            titlesCache[i] = `🎵 Track ${i+1}`;
+            if (document.getElementById(`title-${i}`)) 
+                document.getElementById(`title-${i}`).innerText = `Track ${i+1}`;
+            if(i===0) document.getElementById("title").innerText = "School2k3 Relax";
         }
     }
-    // ensure fallback for first item if failed fetch all
-    if (document.getElementById("title-0")?.innerText.includes("Đang tải")) {
-        document.getElementById("title-0").innerText = "✨ Mellow Sunrise";
-        document.getElementById("title").innerText = "✨ Mellow Sunrise";
-    }
+    // cập nhật khung upcoming sau khi có title
+    updateUpcomingQueue(0);
 }
 
-function updateBG(videoId) {
-    const bgDiv = document.getElementById("bg");
-    bgDiv.style.backgroundImage = `url('https://img.youtube.com/vi/${videoId}/maxresdefault.jpg')`;
+function updateBG(id) {
+    document.getElementById("bg").style.backgroundImage = `url('https://img.youtube.com/vi/${id}/maxresdefault.jpg')`;
 }
 
 function playVideo(index) {
-    if (!player || typeof player.loadVideoById !== "function") return;
-    currentPlayingIndex = index;
-    const videoId = videos[index];
-    player.loadVideoById(videoId);
-    
-    // update active class on playlist items
+    if (!player) return;
+    player.loadVideoById(videos[index]);
+    // active highlight
     document.querySelectorAll(".item").forEach(el => el.classList.remove("active"));
     const activeItem = document.getElementById(`item-${index}`);
     if (activeItem) activeItem.classList.add("active");
-    
-    // update main title
-    const titleElement = document.getElementById(`title-${index}`);
-    if (titleElement && titleElement.innerText) {
-        document.getElementById("title").innerText = titleElement.innerText;
-    } else {
-        document.getElementById("title").innerText = `🎧 Đang phát • Track ${index+1}`;
-    }
-    updateBG(videoId);
+    // cập nhật title chính
+    const newTitle = titlesCache[index] || `Bài hát ${index+1}`;
+    document.getElementById("title").innerText = newTitle;
+    updateBG(videos[index]);
+    // CẬP NHẬT KHUNG "SẮP PHÁT" BÊN DƯỚI VIDEO (lấp khoảng trống)
+    updateUpcomingQueue(index);
 }
 
 function nextRandom() {
-    if (!videos.length) return;
-    let newIdx = Math.floor(Math.random() * videos.length);
-    // avoid same song twice if many choices? optional but fine
-    playVideo(newIdx);
+    let rand = Math.floor(Math.random() * videos.length);
+    playVideo(rand);
 }
 
-// YouTube API handling
+// Youtube API
 let tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 document.body.appendChild(tag);
 
 function onYouTubeIframeAPIReady() {
     renderList();
-    loadTitles();   // title fetching async
-    
-    const firstVideoId = videos[0];
+    loadTitles().then(() => {
+        // sau khi có title, cập nhật upcoming lần nữa
+        updateUpcomingQueue(0);
+    });
     player = new YT.Player('player', {
-        videoId: firstVideoId,
-        playerVars: {
-            autoplay: 1,
-            rel: 0,
-            modestbranding: 1,
-            controls: 1,
-            disablekb: 0,
-            fs: 1,
-            cc_load_policy: 0
-        },
+        videoId: videos[0],
+        playerVars: { autoplay: 1, rel: 0, modestbranding: 1 },
         events: {
-            onReady: (event) => {
-                // after ready ensure background initial
-                updateBG(firstVideoId);
-                event.target.playVideo();
-            },
-            onStateChange: (event) => {
-                // if video ended, jump to random next (chill autoplay)
-                if (event.data === YT.PlayerState.ENDED) {
-                    nextRandom();
-                }
-            },
-            onError: () => {
-                // fallback: skip to random if unavailable
-                nextRandom();
+            onStateChange: (e) => {
+                if (e.data === YT.PlayerState.ENDED) nextRandom();
             }
         }
     });
 }
 
-// fallback in case iframe API delay: manual initial load after window load
-window.addEventListener('load', () => {
-    if (!player && typeof YT === 'undefined') {
-        // extra safeguard
-        const checkInterval = setInterval(() => {
-            if (typeof YT !== 'undefined' && YT.loaded) {
-                clearInterval(checkInterval);
-                if (!player) onYouTubeIframeAPIReady();
-            }
-        }, 300);
-        setTimeout(() => clearInterval(checkInterval), 5000);
-    }
-});
-
-// manual set for signature clean background on dynamic load
+// fallback background
 document.addEventListener("DOMContentLoaded", () => {
-    // set initial placeholder bg
     document.getElementById("bg").style.backgroundImage = "url('https://img.youtube.com/vi/6hNenqz0ISA/maxresdefault.jpg')";
 });
 </script>
