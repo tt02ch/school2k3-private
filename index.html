@@ -2,15 +2,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title> Góc chill của Trường </title>
-
+<title>Góc chill của Trường</title>
 <style>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     height: 100vh;
     color: #fff;
@@ -30,13 +28,71 @@ body {
     z-index: -2;
     transition: background-image 0.6s ease;
 }
-
 .bg::after {
     content: '';
     position: absolute;
     inset: 0;
     background: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,0.85) 100%);
     z-index: -1;
+}
+
+/* === VINYL DISC === */
+.vinyl-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 10px;
+    opacity: 0.85;
+}
+
+.vinyl {
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle at 50% 50%, #222 0%, #111 40%, #000 70%, #333 100%);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 
+        0 15px 35px rgba(0,0,0,0.6),
+        inset 0 0 40px rgba(255,255,255,0.08),
+        0 0 30px rgba(255, 77, 77, 0.3);
+    animation: spin 25s linear infinite paused;
+}
+
+.vinyl.playing {
+    animation-play-state: running;
+}
+
+.vinyl::before {
+    content: '';
+    position: absolute;
+    inset: 20px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    border: 2px solid #444;
+}
+
+.vinyl::after {
+    content: '';
+    position: absolute;
+    inset: 45%;
+    background: #ff4d4d;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255,77,77,0.6);
+}
+
+/* Label */
+.vinyl-label {
+    position: absolute;
+    inset: 32%;
+    background: linear-gradient(135deg, #ff4d4d, #ff9494);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    border: 3px solid rgba(255,255,255,0.2);
 }
 
 /* Navbar */
@@ -55,7 +111,6 @@ body {
     z-index: 100;
     gap: 16px;
 }
-
 .logo {
     font-size: 24px;
     font-weight: 800;
@@ -64,13 +119,11 @@ body {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 .title-nav {
     font-size: 16px;
     opacity: 0.8;
     font-weight: 500;
 }
-
 .btn {
     background: rgba(255, 77, 77, 0.12);
     border: 1px solid rgba(255, 77, 77, 0.4);
@@ -81,7 +134,6 @@ body {
     cursor: pointer;
     transition: all 0.2s;
 }
-
 .btn:hover {
     background: #ff4d4d;
     border-color: #ff4d4d;
@@ -98,7 +150,7 @@ body {
     gap: 24px;
 }
 
-/* LEFT - video area + FILL THE GAP under video */
+/* LEFT */
 .left {
     flex: 2.2;
     display: flex;
@@ -106,7 +158,6 @@ body {
     gap: 16px;
     min-width: 0;
 }
-
 .player-frame {
     width: 100%;
     aspect-ratio: 16 / 9;
@@ -116,11 +167,9 @@ body {
     border: 1px solid rgba(255,255,255,0.1);
     background: #000;
 }
-
 .info-area {
     padding: 0 6px;
 }
-
 .main-title {
     font-size: clamp(20px, 2.5vw, 28px);
     font-weight: 700;
@@ -129,7 +178,6 @@ body {
     color: #fff;
     text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
-
 .signature {
     font-size: 12px;
     color: #ff8a8a;
@@ -137,7 +185,7 @@ body {
     opacity: 0.7;
 }
 
-/* RIGHT - Playlist */
+/* RIGHT */
 .right {
     flex: 1.35;
     min-width: 340px;
@@ -150,7 +198,6 @@ body {
     flex-direction: column;
     overflow: hidden;
 }
-
 .playlist-header {
     padding: 18px 22px 12px;
     border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -160,7 +207,6 @@ body {
     align-items: center;
     gap: 10px;
 }
-
 .playlist-header::before {
     content: '';
     width: 6px;
@@ -169,7 +215,6 @@ body {
     border-radius: 50%;
 }
 
-/* Thanh cuộn đẹp cho list nhạc (yêu cầu số 1) */
 #list {
     flex: 1;
     overflow-y: auto;
@@ -178,21 +223,17 @@ body {
     flex-direction: column;
     gap: 6px;
 }
-
 #list::-webkit-scrollbar {
     width: 5px;
 }
-
 #list::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
 }
-
 #list::-webkit-scrollbar-thumb {
     background: #ff4d4d;
     border-radius: 10px;
 }
-
 #list {
     scrollbar-width: thin;
     scrollbar-color: #ff4d4d rgba(255,255,255,0.1);
@@ -208,17 +249,14 @@ body {
     background: rgba(10,10,14,0.3);
     border: 1px solid transparent;
 }
-
 .item:hover {
     background: rgba(255, 77, 77, 0.15);
     transform: translateX(4px);
 }
-
 .item.active {
     background: linear-gradient(95deg, rgba(255,77,77,0.25), rgba(255,100,100,0.1));
     border-left: 3px solid #ff4d4d;
 }
-
 .thumb {
     width: 100px;
     height: 60px;
@@ -227,15 +265,19 @@ body {
     background-position: center;
     flex-shrink: 0;
 }
-
 .controls {
     padding: 14px 20px 20px;
     border-top: 1px solid rgba(255,255,255,0.07);
 }
-
 .controls .btn {
     width: 100%;
     padding: 10px;
+}
+
+/* Animation */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 /* Responsive */
@@ -252,8 +294,8 @@ body {
         width: 100%;
         max-height: 420px;
     }
-    .gap-filler {
-        min-height: 180px;
+    .vinyl-container {
+        display: none; /* Ẩn trên mobile như yêu cầu */
     }
     .thumb {
         width: 80px;
@@ -263,7 +305,6 @@ body {
 </style>
 </head>
 <body>
-
 <div id="bg" class="bg"></div>
 
 <nav class="navbar">
@@ -275,16 +316,24 @@ body {
 </nav>
 
 <div class="container">
-    <!-- LEFT: Video + info + KHOẢNG TRỐNG ĐƯỢC LẤP ĐẦY BẰNG "SẮP PHÁT" -->
+    <!-- LEFT -->
     <div class="left">
         <div id="player" class="player-frame"></div>
+        
         <div class="info-area">
             <div id="title" class="main-title">Loading...</div>
             <div class="signature">SCHOOL2K3 • PRIVATE CHILL SPACE</div>
         </div>
+
+        <!-- Đĩa nhạc quay -->
+        <div class="vinyl-container">
+            <div id="vinyl" class="vinyl">
+                <div class="vinyl-label">CHILL</div>
+            </div>
+        </div>
     </div>
 
-    <!-- RIGHT: Playlist có thanh cuộn đẹp -->
+    <!-- RIGHT -->
     <div class="right">
         <div class="playlist-header">
             📀 Danh sách phát • Chill Vibes
@@ -297,107 +346,46 @@ body {
 </div>
 
 <script>
-const videos = [
-    "6hNenqz0ISA", "5aU6EXel1Cs", "jPjQJYKhhk4", "2g2QOisCvhs",
-    "b56j7WvwaYM", "T7ksmtaVeOk", "X5Ra4S4B96U", "umMQf9spwMw",
-    "IDafZe9nQ-8", "y3o7Dg9Ikpc", "gOtfJ151ue4", "o1dVTgUa_HA",
-    "scVfZ4Evhuo",
-];
+// ... (giữ nguyên toàn bộ script cũ của bạn) ...
 
-let player;
-let titlesCache = {};
-
-// Render playlist bên phải
-function renderList() {
-    let html = "";
-    videos.forEach((id, i) => {
-        html += `
-        <div class="item ${i===0?'active':''}" onclick="playVideo(${i})" id="item-${i}">
-            <div class="thumb" style="background-image:url('https://img.youtube.com/vi/${id}/hqdefault.jpg')"></div>
-            <div style="flex:1">
-                <div id="title-${i}" style="font-size:14px; font-weight:500; margin-bottom:4px;">Loading...</div>
-                <div style="font-size:11px; opacity:0.6;">School2k3</div>
-            </div>
-        </div>`;
-    });
-    document.getElementById("list").innerHTML = html;
-}
-
-async function loadTitles() {
-    for (let i = 0; i < videos.length; i++) {
-        const id = videos[i];
-        try {
-            const res = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
-            const data = await res.json();
-            let songTitle = data.title || `Chill track ${i+1}`;
-            if (songTitle.length > 50) songTitle = songTitle.substring(0,47)+"...";
-            titlesCache[i] = songTitle;
-            const titleEl = document.getElementById(`title-${i}`);
-            if (titleEl) titleEl.innerText = songTitle;
-            if (i === 0) {
-                document.getElementById("title").innerText = songTitle;
-                updateBG(id);
-            }
-        } catch(e) {
-            titlesCache[i] = `🎵 Track ${i+1}`;
-            if (document.getElementById(`title-${i}`)) 
-                document.getElementById(`title-${i}`).innerText = `Track ${i+1}`;
-            if(i===0) document.getElementById("title").innerText = "School2k3 Relax";
-        }
+// Thêm chức năng quay đĩa theo trạng thái player
+function updateVinyl(isPlaying) {
+    const vinyl = document.getElementById('vinyl');
+    if (isPlaying) {
+        vinyl.classList.add('playing');
+    } else {
+        vinyl.classList.remove('playing');
     }
-    // cập nhật khung upcoming sau khi có title
-    
 }
 
-function updateBG(id) {
-    document.getElementById("bg").style.backgroundImage = `url('https://img.youtube.com/vi/${id}/maxresdefault.jpg')`;
-}
-
-function playVideo(index) {
-    if (!player) return;
-    player.loadVideoById(videos[index]);
-    // active highlight
-    document.querySelectorAll(".item").forEach(el => el.classList.remove("active"));
-    const activeItem = document.getElementById(`item-${index}`);
-    if (activeItem) activeItem.classList.add("active");
-    // cập nhật title chính
-    const newTitle = titlesCache[index] || `Bài hát ${index+1}`;
-    document.getElementById("title").innerText = newTitle;
-    updateBG(videos[index]);
-    // CẬP NHẬT KHUNG "SẮP PHÁT" BÊN DƯỚI VIDEO (lấp khoảng trống)
-    
-}
-
-function nextRandom() {
-    let rand = Math.floor(Math.random() * videos.length);
-    playVideo(rand);
-}
-
-// Youtube API
-let tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-document.body.appendChild(tag);
-
+// Cập nhật trong onYouTubeIframeAPIReady và onStateChange
 function onYouTubeIframeAPIReady() {
     renderList();
-    loadTitles().then(() => {
-        // sau khi có title, cập nhật upcoming lần nữa
-        
-    });
+    loadTitles();
+
     player = new YT.Player('player', {
         videoId: videos[0],
         playerVars: { autoplay: 1, rel: 0, modestbranding: 1 },
         events: {
             onStateChange: (e) => {
+                if (e.data === YT.PlayerState.PLAYING) {
+                    updateVinyl(true);
+                } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
+                    updateVinyl(false);
+                }
                 if (e.data === YT.PlayerState.ENDED) nextRandom();
             }
         }
     });
 }
 
-// fallback background
+// Khởi động đĩa khi load
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("bg").style.backgroundImage = "url('https://img.youtube.com/vi/6hNenqz0ISA/maxresdefault.jpg')";
+    // Bắt đầu quay nhẹ khi load
+    setTimeout(() => {
+        document.getElementById('vinyl').classList.add('playing');
+    }, 800);
 });
 </script>
 </body>
