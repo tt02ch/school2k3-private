@@ -78,6 +78,10 @@ body {
     border-color: #ff4d4d;
     transform: scale(1.02);
 }
+.btn.active {
+    background: #ff4d4d;
+    border-color: #ff4d4d;
+}
 /* Container */
 .container {
     display: flex;
@@ -203,9 +207,11 @@ body {
 .controls {
     padding: 14px 20px 20px;
     border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    gap: 10px;
 }
 .controls .btn {
-    width: 100%;
+    flex: 1;
     padding: 10px;
 }
 /* Responsive */
@@ -237,7 +243,8 @@ body {
 <nav class="navbar">
     <div class="logo">SCHOOL2K3</div>
     <div class="title-nav">Chill Player</div>
-    <div style="margin-left:auto">
+    <div style="margin-left:auto; display: flex; gap: 10px;">
+        <button class="btn" id="repeatBtn" onclick="toggleRepeat()">🔁 Lặp</button>
         <button class="btn" onclick="nextRandom()">🎲 Random</button>
     </div>
 </nav>
@@ -257,7 +264,8 @@ body {
         </div>
         <div id="list"></div>
         <div class="controls">
-            <button class="btn" onclick="nextRandom()">🎲 Phát ngẫu nhiên tiếp theo</button>
+            <button class="btn" onclick="nextRandom()">🎲 Phát ngẫu nhiên</button>
+            <button class="btn" id="repeatBtn2" onclick="toggleRepeat()">🔁 Lặp</button>
         </div>
     </div>
 </div>
@@ -270,6 +278,9 @@ const videos = [
 ];
 let player;
 let titlesCache = {};
+let currentIndex = 0;
+let isRepeat = false; // Biến lưu trạng thái lặp
+
 // Render playlist bên phải
 function renderList() {
     let html = "";
@@ -285,6 +296,7 @@ function renderList() {
     });
     document.getElementById("list").innerHTML = html;
 }
+
 async function loadTitles() {
     for (let i = 0; i < videos.length; i++) {
         const id = videos[i];
@@ -308,11 +320,14 @@ async function loadTitles() {
         }
     }
 }
+
 function updateBG(id) {
     document.getElementById("bg").style.backgroundImage = `url('https://img.youtube.com/vi/${id}/maxresdefault.jpg')`;
 }
+
 function playVideo(index) {
     if (!player) return;
+    currentIndex = index;
     player.loadVideoById(videos[index]);
     // active highlight
     document.querySelectorAll(".item").forEach(el => el.classList.remove("active"));
@@ -323,14 +338,48 @@ function playVideo(index) {
     document.getElementById("title").innerText = newTitle;
     updateBG(videos[index]);
 }
+
 function nextRandom() {
     let rand = Math.floor(Math.random() * videos.length);
     playVideo(rand);
 }
+
+// Hàm toggle repeat
+function toggleRepeat() {
+    isRepeat = !isRepeat;
+    const repeatBtn = document.getElementById('repeatBtn');
+    const repeatBtn2 = document.getElementById('repeatBtn2');
+    
+    if (isRepeat) {
+        repeatBtn.classList.add('active');
+        repeatBtn2.classList.add('active');
+        repeatBtn.textContent = '🔁 Lặp (ON)';
+        repeatBtn2.textContent = '🔁 Lặp (ON)';
+    } else {
+        repeatBtn.classList.remove('active');
+        repeatBtn2.classList.remove('active');
+        repeatBtn.textContent = '🔁 Lặp';
+        repeatBtn2.textContent = '🔁 Lặp';
+    }
+}
+
+// Xử lý khi video kết thúc
+function handleVideoEnd() {
+    if (isRepeat) {
+        // Lặp lại bài hiện tại
+        player.playVideo();
+    } else {
+        // Phát bài tiếp theo
+        const nextIndex = (currentIndex + 1) % videos.length;
+        playVideo(nextIndex);
+    }
+}
+
 // Youtube API
 let tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 document.body.appendChild(tag);
+
 function onYouTubeIframeAPIReady() {
     renderList();
     loadTitles().then(() => {
@@ -341,11 +390,14 @@ function onYouTubeIframeAPIReady() {
         playerVars: { autoplay: 1, rel: 0, modestbranding: 1 },
         events: {
             onStateChange: (e) => {
-                if (e.data === YT.PlayerState.ENDED) nextRandom();
+                if (e.data === YT.PlayerState.ENDED) {
+                    handleVideoEnd();
+                }
             }
         }
     });
 }
+
 // fallback background
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("bg").style.backgroundImage = "url('https://img.youtube.com/vi/6hNenqz0ISA/maxresdefault.jpg')";
